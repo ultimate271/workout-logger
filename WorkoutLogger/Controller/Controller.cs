@@ -1,0 +1,5 @@
+﻿namespace WorkoutLogger {
+	class Controller {
+		
+	}
+}
