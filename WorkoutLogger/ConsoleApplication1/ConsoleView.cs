@@ -1,14 +1,22 @@
-﻿namespace WorkoutLogger {
+﻿
+namespace WorkoutLogger {
+	using Model;
 	public class ConsoleView {
 
 		public static void Main(string[] args) {
 			System.Console.WriteLine("This is the console view");
-			Model.XmlSerializableContext context1 = new Model.XmlSerializableContext { IncludeMeta = true };
-			Model.XmlSerializableContext context2 = new Model.XmlSerializableContext(context1);
-			context1.IncludeMeta = false;
-			context1.SomeString = "This is a string!";
-			System.Console.WriteLine(context1);
-			System.Console.WriteLine(context2);
+			MiscWorkout myWorkout = new MiscWorkout {
+				Name = "My Workout",
+				Description = "A very complicated workout",
+				XmlContext = new XmlSerializableContext {
+					SerializeMode = XmlSerializableContext.XmlSerializeOptions.LocalFile,
+					IncludeId = false
+				}
+			};
+
+			System.Console.WriteLine(myWorkout.ToXml().ToString());
+
+			
 
 			//Model.TestClass myClass = new Model.TestClass(null);
 			//myClass.XmlContext = new Model.XmlSerializableContext { IncludeMeta = false };
