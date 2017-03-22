@@ -76,7 +76,12 @@ namespace WorkoutLogger{
 			/// <param name="XmlContext"></param>
 			/// <returns>An XElement that contains a Workout node with some metadata nodes</returns>
 			public override XElement ToXml(XmlSerializableContext XmlContext){
-				return base.ToXml(XmlContext);
+				XElement retVal = null;
+				if (XmlContext.SerializeMode == XmlSerializableContext.XmlSerializeOptions.LocalFile){
+					retVal = base.ToXml(XmlContext);
+					retVal.Add(new XElement("Description", this.Description));
+				}
+				return retVal;
 			}
 
 			#endregion

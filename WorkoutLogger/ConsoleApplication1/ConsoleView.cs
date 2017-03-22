@@ -8,24 +8,22 @@ namespace WorkoutLogger {
 
 		public static void Main(string[] args) {
 			System.Console.WriteLine("This is the console view");
-			MiscWorkout myWorkout = new MiscWorkout {
-				//Name = "My Workout",
+			Workout myWorkout = new MiscWorkout {
+				Name = "Workout name",
 				Description = "A very complicated workout",
+				Comment = "This is a comment about this workout",
+				Id = 12,
 				XmlContext = new XmlSerializableContext {
 					SerializeMode = XmlSerializableContext.XmlSerializeOptions.LocalFile,
-					IncludeId = false
+					IncludeId = true
 				}
 			};
 
-			XElement xml = myWorkout.ToXml();
+			Workout secondWorkout = new MiscWorkout();
+			secondWorkout.LoadFromXml(myWorkout.ToXml());
 
-			var myQuery = from nameElement in xml.Elements()
-						  where nameElement.Name == "Name"
-						  select nameElement.Value;
-
-			string name = myQuery.SingleOrDefault();
-
-			System.Console.WriteLine(name ?? "Null String");
+			System.Console.WriteLine(myWorkout.ToXml().ToString());
+			System.Console.WriteLine(secondWorkout.ToXml().ToString());
 
 			
 
