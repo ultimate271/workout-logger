@@ -1,4 +1,7 @@
-﻿
+﻿using System.Linq;
+using System.Collections.Generic;
+using System.Xml.Linq;
+
 namespace WorkoutLogger {
 	using Model;
 	public class ConsoleView {
@@ -6,7 +9,7 @@ namespace WorkoutLogger {
 		public static void Main(string[] args) {
 			System.Console.WriteLine("This is the console view");
 			MiscWorkout myWorkout = new MiscWorkout {
-				Name = "My Workout",
+				//Name = "My Workout",
 				Description = "A very complicated workout",
 				XmlContext = new XmlSerializableContext {
 					SerializeMode = XmlSerializableContext.XmlSerializeOptions.LocalFile,
@@ -14,7 +17,15 @@ namespace WorkoutLogger {
 				}
 			};
 
-			System.Console.WriteLine(myWorkout.ToXml().ToString());
+			XElement xml = myWorkout.ToXml();
+
+			var myQuery = from nameElement in xml.Elements()
+						  where nameElement.Name == "Name"
+						  select nameElement.Value;
+
+			string name = myQuery.SingleOrDefault();
+
+			System.Console.WriteLine(name ?? "Null String");
 
 			
 

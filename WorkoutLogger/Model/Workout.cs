@@ -4,8 +4,6 @@ using System.Xml.Linq;
 namespace WorkoutLogger {
 	namespace Model {
 		public abstract class Workout : IXmlSerializable {
-			#region Defaults
-			#endregion
 			#region Properties
 			public string Name {
 				get => _Name;
