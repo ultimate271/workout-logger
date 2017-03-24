@@ -93,6 +93,11 @@ namespace WorkoutLogger {
 		//}
 
 		[XmlSerializable]
+		public class DerivedClass : TestClass{
+
+		}
+
+		[XmlSerializable]
 		public class TestClass{
 			[XmlSerializable]
 			public int TestInt1 { get; set; }

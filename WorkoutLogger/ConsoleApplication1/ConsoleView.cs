@@ -10,7 +10,7 @@ namespace WorkoutLogger {
 	public class ConsoleView {
 
 		public static void Main(string[] args) {
-			TestClass myTestObject = new TestClass() {
+			DerivedClass myTestObject = new DerivedClass() {
 				TestInt1 = 21,
 				TestInt2 = 15,
 				TestInt3 = 9,
