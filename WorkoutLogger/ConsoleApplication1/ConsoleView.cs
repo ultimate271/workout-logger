@@ -10,7 +10,7 @@ namespace WorkoutLogger {
 	public class ConsoleView {
 
 		public static void Main(string[] args) {
-			DerivedClass myTestObject = new DerivedClass() {
+			TestClass myTestObject = new TestClass() {
 				TestInt1 = 21,
 				TestInt2 = 15,
 				TestInt3 = 9,
@@ -31,12 +31,27 @@ namespace WorkoutLogger {
 			//List<List<int>> crazyList = new List<List<int>>(new List<int>[] { new List<int>() { 1, 3, 5, 7 }, new List<int>() { 2, 4, 6, 8 }, new List<int>() { 1, 4, 8 } });
 			//System.Console.WriteLine("{0}", crazyList.SerializeToXml());
 
-			System.Console.WriteLine("{0}", myTestObject.IsXmlSerializable());
-			System.Console.WriteLine("{0}", myTestObject.TestObject.IsXmlSerializable());
-			System.Console.WriteLine("{0}", myTestObject.SerializeToXml());
+			//System.Console.WriteLine("{0}", myTestObject.IsXmlSerializable());
+			//System.Console.WriteLine("{0}", myTestObject.TestObject.IsXmlSerializable());
+			//System.Console.WriteLine("{0}", myTestObject.SerializeToXml());
 
-			
-			
+			//System.Console.WriteLine("{0}", "list".StringToType("TestClass"));
+
+			System.Console.WriteLine("{0}\n{1}\n{2}",
+				myTestObject,
+				myTestObject.SerializeToXml(),
+				myTestObject.SerializeToXml().DeserializeFromXml());
+
+			//XElement testXml = (new List<int>() { 2, 3, 1, 5 }).SerializeToXml();
+			//IList list = testXml.DeserializeFromXml() as IList;
+			//System.Console.WriteLine("{0}\n{1}", testXml, list);
+			//foreach (object o in list) {
+			//	System.Console.WriteLine(o);
+			//}
+			//System.Console.WriteLine("{0}", 0.SerializeToXml().DeserializeFromXml());
+
+
+
 			//System.Console.WriteLine("{0}", (new List<string>()).GetType().GetGenericArguments().SingleOrDefault().IsXmlSerializable());
 
 			//System.Console.WriteLine("This is the console view");
@@ -57,7 +72,7 @@ namespace WorkoutLogger {
 			//System.Console.WriteLine(myWorkout.ToXml().ToString());
 			//System.Console.WriteLine(secondWorkout.ToXml().ToString());
 
-			
+
 
 			//Model.TestClass myClass = new Model.TestClass(null);
 			//myClass.XmlContext = new Model.XmlSerializableContext { IncludeMeta = false };
