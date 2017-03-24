@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace WorkoutLogger {
 	namespace Model {
-		public abstract class Workout : IXmlSerializable {
+		public abstract class Workout {
 			#region Properties
 			public string Name {
 				get => _Name;
@@ -24,12 +24,11 @@ namespace WorkoutLogger {
 
 			#region Empty Constructors
 
-			//This constructor intentionally creates a soft copy of "SubstitutionOf", as this is a reference to another workout which is associated, not aggregated, by this workout.
 			protected Workout() { }
 
-			protected Workout(
-				XElement IncomingXml
-			) : this(IncomingXml, null) { }
+			//protected Workout(
+			//	XElement IncomingXml
+			//) : this(IncomingXml, null) { }
 
 			#endregion
 
@@ -42,13 +41,13 @@ namespace WorkoutLogger {
 				
 			}
 
-			protected Workout(
-				XElement IncomingXml, 
-				XmlSerializableContext XmlContext
-			){
-				this.XmlContext = XmlContext ?? new XmlSerializableContext(); //The set method ensures that the value is not null, belt and suspenders here
-				LoadFromXml(IncomingXml, XmlContext);
-			}
+			//protected Workout(
+			//	XElement IncomingXml, 
+			//	XmlSerializableContext XmlContext
+			//){
+			//	this.XmlContext = XmlContext ?? new XmlSerializableContext(); //The set method ensures that the value is not null, belt and suspenders here
+			//	LoadFromXml(IncomingXml, XmlContext);
+			//}
 			#endregion
 			#endregion
 			#region Methods
@@ -56,49 +55,49 @@ namespace WorkoutLogger {
 			#endregion
 			#region Implementations
 			#region XMLSerializable
-			public XmlSerializableContext XmlContext {
-				get => _XmlContext;
-				set => _XmlContext = value ?? new XmlSerializableContext();
-			}
+			//public XmlSerializableContext XmlContext {
+			//	get => _XmlContext;
+			//	set => _XmlContext = value ?? new XmlSerializableContext();
+			//}
 
 
-			public virtual void LoadFromXml(XElement IncomingXml, XmlSerializableContext XmlContext) {
-				XmlContext = XmlContext ?? this.XmlContext;
-				if (XmlContext.SerializeMode == XmlSerializableContext.XmlSerializeOptions.LocalFile){
-					var info = new {
-						Name = (from e in IncomingXml.Elements("Name")
-						       select e.Value).SingleOrDefault(),
-						Id = XmlContext.IncludeId
-							? (from e in IncomingXml.Attributes("Id")
-							   select e.Value).SingleOrDefault()
-							: null 
+			//public virtual void LoadFromXml(XElement IncomingXml, XmlSerializableContext XmlContext) {
+			//	XmlContext = XmlContext ?? this.XmlContext;
+			//	if (XmlContext.SerializeMode == XmlSerializableContext.XmlSerializeOptions.LocalFile){
+			//		var info = new {
+			//			Name = (from e in IncomingXml.Elements("Name")
+			//			       select e.Value).SingleOrDefault(),
+			//			Id = XmlContext.IncludeId
+			//				? (from e in IncomingXml.Attributes("Id")
+			//				   select e.Value).SingleOrDefault()
+			//				: null 
 						
-					};
-					this.Name = info.Name;
-				}
-			}
+			//		};
+			//		this.Name = info.Name;
+			//	}
+			//}
 
 
-			public virtual XElement ToXml(XmlSerializableContext XmlContext) {
-				XmlContext = XmlContext ?? this.XmlContext;
-				XElement retVal = null;
+			//public virtual XElement ToXml(XmlSerializableContext XmlContext) {
+			//	XmlContext = XmlContext ?? this.XmlContext;
+			//	XElement retVal = null;
 
-				if (XmlContext.SerializeMode == XmlSerializableContext.XmlSerializeOptions.LocalFile){
-					retVal = new XElement("Workout",
-						                                      new XAttribute("Scheme", this.Scheme),
-						XmlContext.IncludeId ?                new XAttribute("Id", this.Id) : null,
-						!string.IsNullOrEmpty(this.Name) ?    new XElement("Name", this.Name) : null,
-						!string.IsNullOrEmpty(this.Comment) ? new XElement("Comment", this.Comment) : null
-					);
-				}
+			//	if (XmlContext.SerializeMode == XmlSerializableContext.XmlSerializeOptions.LocalFile){
+			//		retVal = new XElement("Workout",
+			//			                                      new XAttribute("Scheme", this.Scheme),
+			//			XmlContext.IncludeId ?                new XAttribute("Id", this.Id) : null,
+			//			!string.IsNullOrEmpty(this.Name) ?    new XElement("Name", this.Name) : null,
+			//			!string.IsNullOrEmpty(this.Comment) ? new XElement("Comment", this.Comment) : null
+			//		);
+			//	}
 
-				return retVal;
-			}
+			//	return retVal;
+			//}
 			#endregion
 			#endregion
 			#region private
 			private string _Name = "";
-			private XmlSerializableContext _XmlContext = new XmlSerializableContext();
+			//private XmlSerializableContext _XmlContext = new XmlSerializableContext();
 			private int _Id;
 			private string _Comment;
 			#endregion

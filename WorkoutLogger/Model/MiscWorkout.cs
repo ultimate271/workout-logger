@@ -17,42 +17,43 @@ namespace WorkoutLogger{
 			#endregion
 			#region Constructors
 			#region Empty Constructors
-			public MiscWorkout() : this (null, null, null, null) {}
-			public MiscWorkout(
-				string Name
-			) : this(Name, null, null, null) { }
-			public MiscWorkout(
-				string Name,
-				Workout SubstitutionOf
-			) : this(Name, SubstitutionOf, null, null) { }
-			public MiscWorkout(
-				string Name,
-				Workout SubstitutionOf,
-				XmlSerializableContext XmlContext
-			) : this(Name, SubstitutionOf, XmlContext, null) { }
+			public MiscWorkout() : base() { }
+			//public MiscWorkout() : this (null, null, null, null) {}
+			//public MiscWorkout(
+			//	string Name
+			//) : this(Name, null, null, null) { }
+			//public MiscWorkout(
+			//	string Name,
+			//	Workout SubstitutionOf
+			//) : this(Name, SubstitutionOf, null, null) { }
+			//public MiscWorkout(
+			//	string Name,
+			//	Workout SubstitutionOf,
+			//	XmlSerializableContext XmlContext
+			//) : this(Name, SubstitutionOf, XmlContext, null) { }
 
 			
-			public MiscWorkout(
-				XElement IncomingXml
-			) : this(IncomingXml, null) { }
+			//public MiscWorkout(
+			//	XElement IncomingXml
+			//) : this(IncomingXml, null) { }
 			#endregion
 			#region Meaningful Constructors
 
-			public MiscWorkout(
-				XElement IncomingXml, 
-				XmlSerializableContext XmlContext
-			) {
-				base.XmlContext = XmlContext;
-				this.LoadFromXml(IncomingXml);
-			}
-			public MiscWorkout(
-				string Name, 
-			    Workout SubstitutionOf, 
-			    XmlSerializableContext XmlContext,
-			    string Description
-			) : base (Name, SubstitutionOf, XmlContext){
-				this.Description = Description;
-			}
+			//public MiscWorkout(
+			//	XElement IncomingXml, 
+			//	XmlSerializableContext XmlContext
+			//) {
+			//	base.XmlContext = XmlContext;
+			//	this.LoadFromXml(IncomingXml);
+			//}
+			//public MiscWorkout(
+			//	string Name, 
+			//    Workout SubstitutionOf, 
+			//    XmlSerializableContext XmlContext,
+			//    string Description
+			//) : base (Name, SubstitutionOf, XmlContext){
+			//	this.Description = Description;
+			//}
 
 			#endregion
 			#endregion
@@ -66,23 +67,23 @@ namespace WorkoutLogger{
 			}
 			#endregion
 			#region XMLSerializable
-			public override void LoadFromXml(XElement incomingXml, XmlSerializableContext XmlContext){
-				base.LoadFromXml(incomingXml, XmlContext);
-			}
+			//public override void LoadFromXml(XElement incomingXml, XmlSerializableContext XmlContext){
+			//	base.LoadFromXml(incomingXml, XmlContext);
+			//}
 
-			/// <summary>
-			/// 
-			/// </summary>
-			/// <param name="XmlContext"></param>
-			/// <returns>An XElement that contains a Workout node with some metadata nodes</returns>
-			public override XElement ToXml(XmlSerializableContext XmlContext){
-				XElement retVal = null;
-				if (XmlContext.SerializeMode == XmlSerializableContext.XmlSerializeOptions.LocalFile){
-					retVal = base.ToXml(XmlContext);
-					retVal.Add(new XElement("Description", this.Description));
-				}
-				return retVal;
-			}
+			///// <summary>
+			///// 
+			///// </summary>
+			///// <param name="XmlContext"></param>
+			///// <returns>An XElement that contains a Workout node with some metadata nodes</returns>
+			//public override XElement ToXml(XmlSerializableContext XmlContext){
+			//	XElement retVal = null;
+			//	if (XmlContext.SerializeMode == XmlSerializableContext.XmlSerializeOptions.LocalFile){
+			//		retVal = base.ToXml(XmlContext);
+			//		retVal.Add(new XElement("Description", this.Description));
+			//	}
+			//	return retVal;
+			//}
 
 			#endregion
 			#endregion
