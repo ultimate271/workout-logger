@@ -45,8 +45,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Workout.cs" />
     <Compile Include="Declarations.cs" />
-    <Compile Include="XmlSerialization\XmlSerializor.cs" />
-    <Compile Include="XmlSerialization\XmlSerializorDeclarations.cs" />
+    <Compile Include="XmlSerialization\XmlSerializer.cs" />
+    <Compile Include="XmlSerialization\XmlSerializerDeclarations.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

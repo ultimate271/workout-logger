@@ -98,7 +98,7 @@ namespace WorkoutLogger {
 		}
 
 		[XmlSerializable]
-		public class TestClass{
+		public class TestClass {
 			[XmlSerializable]
 			public int TestInt1 { get; set; }
 			[XmlSerializable]
@@ -112,18 +112,38 @@ namespace WorkoutLogger {
 			[XmlSerializable]
 			public List<int> TestList { get; set; }
 			[XmlSerializable]
+			public List<List<int>> CrazyList { get; set; } = new List<List<int>>();
+			[XmlSerializable]
 			public AnotherTestClass TestObject { get; set; }
+			[XmlSerializable]
+			public List<AnotherTestClass> ObjectList { get; set; }
 
 			public TestClass() { }
 			public override string ToString() {
-				return string.Format("TestInt1: {0}\nTestInt2: {1}\nTestInt3: {2}\nTestString1: {3}\nTestString2: {4}\nTestList: {5}\nTestObject{6}",
+				return string.Format("TestInt1: {0}\nTestInt2: {1}\nTestInt3: {2}\nTestString1: {3}\nTestString2: {4}\nTestList: {5}\nCrazyList:{6}\nTestObject{7}\nObjectList:{8}",
 					TestInt1,
 					TestInt2,
 					TestInt3,
 					TestString1,
 					TestString2,
 					List2String(TestList),
-					TestObject);
+					CrazyList2String(CrazyList),
+					TestObject,
+					ObjectList2String(ObjectList));
+			}
+			public static string ObjectList2String(List<AnotherTestClass> l){
+				string retVal = "";
+				foreach(AnotherTestClass c in l){
+					retVal += "\n" + c.ToString();
+				}
+				return retVal;
+			}
+			public static string CrazyList2String(List<List<int>> l){
+				string retVal = "";
+				foreach(List<int> sublist in l){
+					retVal += "|" + List2String(sublist);
+				}
+				return retVal;
 			}
 			public static string List2String(List<int> l){
 				string retVal = "";
