@@ -18,15 +18,16 @@ namespace WorkoutLogger {
 				TestString1 = "Fran",
 				TestString2 = "Cindy",
 				TestList = new List<int>(new int[] { 42, 24, 18, 21 }),
-				CrazyList = new List<List<int>>(new List<int>[] { new List<int>(new int[] { 3, 5, 7 }), new List<int>(new int[] { 2, 4, 6, 8 }) } ),
+				CrazyList = new List<List<int>>(new List<int>[] { new List<int>(new int[] { 3, 5, 7 }), new List<int>(new int[] { 2, 4, 6, 8 }) }),
 				TestObject = new AnotherTestClass() {
 					AnotherTestInt1 = 20,
 					AnotherTestInt2 = 10
 				},
 				ObjectList = new List<AnotherTestClass>(new AnotherTestClass[]{
-				new AnotherTestClass(){
+				new DerivedClass(){
 					AnotherTestInt1 = 44,
-					AnotherTestInt2 = 22
+					AnotherTestInt2 = 22,
+					DerivedClassInt = 666
 				}, new AnotherTestClass() {
 					AnotherTestInt1 = 55,
 					AnotherTestInt2 = 33
@@ -53,9 +54,13 @@ namespace WorkoutLogger {
 			//	myTestObject.SerializeToXml(),
 			//	myTestObject.SerializeToXml().DeserializeFromXml());
 
-			System.Console.WriteLine(myTestObject);
-			System.Console.WriteLine(myTestObject.SerializeToXml());
-			System.Console.WriteLine(myTestObject.SerializeToXml().DeserializeFromXml());
+			//System.Console.WriteLine(myTestObject);
+			//System.Console.WriteLine(myTestObject.SerializeToXml());
+			//System.Console.WriteLine(myTestObject.SerializeToXml().DeserializeFromXml());
+			//			myTestObject.SerializeToXml().Save("TestObject.xml");
+			System.Console.WriteLine(XElement.Load("TestObject.xml"));
+			System.Console.WriteLine(XElement.Load("TestObject.xml").DeserializeFromXml());
+
 			//Match m1 = Regex.Match("list<list<int>>", @"list<(.*)>");
 			//List<List<int>> crazyList = new List<List<int>>();
 			//Type crazyType = crazyList.GetType();

@@ -93,8 +93,12 @@ namespace WorkoutLogger {
 		//}
 
 		[XmlSerializable]
-		public class DerivedClass : TestClass{
-
+		public class DerivedClass : AnotherTestClass{
+			[XmlSerializable]
+			public int DerivedClassInt { get; set; }
+			public override string ToString() {
+				return string.Format("\n\tDerivedClassInt: {0}{1}", DerivedClassInt, base.ToString());
+			}
 		}
 
 		[XmlSerializable]
@@ -159,9 +163,10 @@ namespace WorkoutLogger {
 			public int AnotherTestInt1 { get; set; }
 			[XmlSerializable]
 			public int AnotherTestInt2 { get; set; }
+			public int AnotherTestInt3 { get; set; }
 			public AnotherTestClass() { }
 			public override string ToString() {
-				return string.Format("\n\tAnotherTestInt1: {0}\n\tAnotherTestInt2: {1}", AnotherTestInt1, AnotherTestInt2);
+				return string.Format("\n\tAnotherTestInt1: {0}\n\tAnotherTestInt2: {1}\n\tAnotherTestInt3: {2}", AnotherTestInt1, AnotherTestInt2, AnotherTestInt3);
 			}
 		}
 	}

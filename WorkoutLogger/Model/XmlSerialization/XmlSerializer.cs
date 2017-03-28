@@ -50,7 +50,6 @@ namespace XmlSerializer{
 
 			return retVal;
 		}//SerializeToXml
-
 		public static object DeserializeFromXml(this XElement x, Assembly a){
 			object retVal = null;
 
@@ -72,8 +71,8 @@ namespace XmlSerializer{
 
 				foreach (XElement child in x.Elements()) {
 					Type descType = child.AttributeValue("type").StringToType();
-					if (child.AttributeValue("type").StringToType() != ofType) throw new Exception("XmlSerializerExtensions.DeserializeFromXml: List member type mismatch"); //TODO make a custom exception
-					tempRetVal.Add(child.DeserializeFromXml());
+					if (!ofType.IsAssignableFrom(descType)) throw new Exception("XmlSerializerExtensions.DeserializeFromXml: List member type mismatch"); //TODO make a custom exception
+					tempRetVal.Add(child.DeserializeFromXml(a));
 				}
 				retVal = tempRetVal;
 			}//Recursive Case List
@@ -83,10 +82,11 @@ namespace XmlSerializer{
 					from child in x.Elements()
 					join pi in returnType.GetProperties()
 					on child.Name equals pi.Name
-					select new { property = pi, value = child.DeserializeFromXml() };
+					where pi.IsXmlSerializable()
+					select new { Property = pi, Value = child.DeserializeFromXml(a) };
 
 				foreach (var pair in query){
-					pair.property.SetValue(retVal, pair.value);
+					pair.Property.SetValue(retVal, pair.Value);
 				}
 			}//Recursive Case Object
 
@@ -109,7 +109,7 @@ namespace XmlSerializer{
 			if (t == typeof(int) || t == typeof(string) || t.IsGenericList()){
 				return true;
 			}
-			return (from att in t.CustomAttributes where att.AttributeType == typeof(XmlSerializableAttribute) select att).Any();
+			return t.IsDefined(typeof(XmlSerializableAttribute));
 		}
 		public static bool IsXmlSerializable(this PropertyInfo p){
 			return p.IsDefined(typeof(XmlSerializableAttribute));
@@ -136,7 +136,6 @@ namespace XmlSerializer{
 				 select xatt.Value).SingleOrDefault(); //Throws an exception if there is more than one attribute with Name == attributeName
 		}
 
-		//Not so sure how I feel about using this method
 
 		public static Type StringToType(this string s){
 			return s.StringToType(typeof(XmlSerializerExtensions).Assembly);
