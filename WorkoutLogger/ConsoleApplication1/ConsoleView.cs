@@ -27,6 +27,7 @@ namespace WorkoutLogger {
 				new DerivedClass(){
 					AnotherTestInt1 = 44,
 					AnotherTestInt2 = 22,
+					AnotherTestInt3 = 88,
 					DerivedClassInt = 666
 				}, new AnotherTestClass() {
 					AnotherTestInt1 = 55,
@@ -49,18 +50,19 @@ namespace WorkoutLogger {
 
 			//System.Console.WriteLine("{0}", "list".StringToType("TestClass"));
 
-			//System.Console.WriteLine("{0}\n{1}\n{2}",
-			//	myTestObject,
-			//	myTestObject.SerializeToXml(),
-			//	myTestObject.SerializeToXml().DeserializeFromXml());
+			System.Console.WriteLine("{0}\n{1}\n{2}",
+				myTestObject,
+				myTestObject.SerializeToXml(),
+				myTestObject.SerializeToXml().DeserializeFromXml());
 
 			//System.Console.WriteLine(myTestObject);
 			//System.Console.WriteLine(myTestObject.SerializeToXml());
 			//System.Console.WriteLine(myTestObject.SerializeToXml().DeserializeFromXml());
-			//			myTestObject.SerializeToXml().Save("TestObject.xml");
-			System.Console.WriteLine(XElement.Load("TestObject.xml"));
-			System.Console.WriteLine(XElement.Load("TestObject.xml").DeserializeFromXml());
+			//myTestObject.SerializeToXml().Save("TestObject.xml");
+			//System.Console.WriteLine(XElement.Load("TestObject.xml"));
+			//System.Console.WriteLine(XElement.Load("TestObject.xml").DeserializeFromXml());
 
+			//System.Console.WriteLine(myTestObject.SerializeToXml());
 			//Match m1 = Regex.Match("list<list<int>>", @"list<(.*)>");
 			//List<List<int>> crazyList = new List<List<int>>();
 			//Type crazyType = crazyList.GetType();

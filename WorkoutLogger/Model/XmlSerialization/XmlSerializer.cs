@@ -15,21 +15,15 @@ namespace XmlSerializer{
 
 		public static XElement SerializeToXml(this object o, string rootName){
 			XElement retVal = new XElement(rootName);
-
-			if (o is int) {
-				retVal.Add(new XAttribute("type", "int"));
+			retVal.Add(new XAttribute("type", o.GetType().TypeToString()));
+			
+			if (o is int || o is string) {
 				retVal.Add(o);
-			}//Base Case int
-			else if (o is string) {
-				retVal.Add(new XAttribute("type", "string"));
-				retVal.Add(o);
-			}//Base Case string
+			}//Base Case int or string
 			else if (o.IsGenericList()) {
 				Type genericType = o.GetType().GetGenericArguments().SingleOrDefault(); //Will throw an exception if o is an IList that has multiple generic types somehow
 				if (genericType == null) { throw new Exception("XmlSerializerExtensions.SerializeToXml threw exception in case where o should have been a generic list but isn't somehow"); }
 				if (genericType.IsXmlSerializable()) {
-					retVal.Add(new XAttribute("type", o.GetType().TypeToString()));
-
 					//string ofString = genericType.TypeToString();
 					foreach (object listObj in (o as IList)) {
 						string nodeName = listObj.GetType().IsGenericList() ? "list" : listObj.GetType().TypeToString();
@@ -39,7 +33,6 @@ namespace XmlSerializer{
 			}//Recursive Case Generic List
 			else {
 				if (!o.IsXmlSerializable()) throw new Exception("o is not xml Serializable"); //TODO put a custom exception here
-				retVal.Add(new XAttribute("type", o.GetType().Name));
 				foreach(PropertyInfo p in o.GetType().GetProperties()){
 					if (p.IsXmlSerializable()){
 						retVal.Add(p.GetValue(o).SerializeToXml(p.Name));
@@ -53,8 +46,8 @@ namespace XmlSerializer{
 		public static object DeserializeFromXml(this XElement x, Assembly a){
 			object retVal = null;
 
-			string typeValue = x.AttributeValue("type");
-			Type returnType = typeValue.StringToType(a);
+			//string typeValue = x.AttributeValue("type");
+			Type returnType = x.AttributeValue("type").StringToType(a);
 
 			if (returnType == typeof(int)) {
 				retVal = Int32.Parse(x.Value);
@@ -84,8 +77,9 @@ namespace XmlSerializer{
 					on child.Name equals pi.Name
 					where pi.IsXmlSerializable()
 					select new { Property = pi, Value = child.DeserializeFromXml(a) };
-
+				
 				foreach (var pair in query){
+					if (!pair.Value.GetType().IsXmlSerializable()) throw new Exception(string.Format("{0} is not xml serializable", pair.Value.GetType().Name));
 					pair.Property.SetValue(retVal, pair.Value);
 				}
 			}//Recursive Case Object
