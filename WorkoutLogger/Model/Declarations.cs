@@ -3,8 +3,39 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 
 using XmlSerializer;
+using System.Runtime.Serialization;
+
 namespace WorkoutLogger {
 	namespace Model {
+		[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+		public class WL_ResultCompatabilityAttribute : Attribute{
+			/// <summary>
+			/// Indicates the types of workouts that the class that is tagged by this attribute is compatible with
+			/// </summary>
+			public Type[] WorkoutTypes { get; set; }
+			public WL_ResultCompatabilityAttribute(params Type[] WorkoutTypes){
+				this.WorkoutTypes = WorkoutTypes;
+			}
+		}
+		#region Exceptions
+		/// <summary>
+		/// Does nothing except extend Exception. Used to differentiate when I as a developer have thrown an exception, vs when I have made a mistake and an exception gets thrown by my code
+		/// </summary>
+		public class WL_Exception : Exception {
+			public WL_Exception() {
+			}
+
+			public WL_Exception(string message) : base(message) {
+			}
+
+			public WL_Exception(string message, Exception innerException) : base(message, innerException) {
+			}
+
+			protected WL_Exception(SerializationInfo info, StreamingContext context) : base(info, context) {
+			}
+		}
+		#endregion
+		#region Old Stuff
 		/// <summary>
 		/// Implemented by all classes in the model which can be interpreted as Xml
 		/// A class which implements this interface can be converted to xml and created from xml.
@@ -91,13 +122,14 @@ namespace WorkoutLogger {
 		//		return retVal;
 		//	}
 		//}
-
+		#endregion
+		#region Debug Stuff
 		[XmlSerializable]
 		public class DerivedClass : AnotherTestClass{
 			[XmlSerializable]
 			public int DerivedClassInt { get; set; }
 			public override string ToString() {
-				return string.Format("\n\tDerivedClassInt: {0}{1}", DerivedClassInt, base.ToString());
+				return $"\n\tDerivedClassInt: {DerivedClassInt}{base.ToString()}";
 			}
 		}
 
@@ -152,7 +184,7 @@ namespace WorkoutLogger {
 			public static string List2String(List<int> l){
 				string retVal = "";
 				foreach (int i in l){
-					retVal += string.Format("{0},", i);
+					retVal += $"{i}";
 				}
 				return retVal;
 			}
@@ -169,5 +201,6 @@ namespace WorkoutLogger {
 				return string.Format("\n\tAnotherTestInt1: {0}\n\tAnotherTestInt2: {1}\n\tAnotherTestInt3: {2}", AnotherTestInt1, AnotherTestInt2, AnotherTestInt3);
 			}
 		}
+		#endregion
 	}
 }

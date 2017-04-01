@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Linq;
+using XmlSerializer;
 
 namespace WorkoutLogger{
 	namespace Model{
@@ -8,8 +9,10 @@ namespace WorkoutLogger{
 		/// Use only when implementation of a whole new scheme of workout is either still in progress
 		/// or the workout is so wonky that it doesn't fit into any scheme and its "one of a kind" so to speak
 		/// </summary>
-		public class MiscWorkout : Workout{
+		[XmlSerializable]
+		public class WL_MiscWorkout : WL_Workout{
 			#region Properties
+			[XmlSerializable]
 			public string Description {
 				get { return _Description; }
 				set { _Description = value; }
@@ -17,7 +20,7 @@ namespace WorkoutLogger{
 			#endregion
 			#region Constructors
 			#region Empty Constructors
-			public MiscWorkout() : base() { }
+			public WL_MiscWorkout() : base() { }
 			//public MiscWorkout() : this (null, null, null, null) {}
 			//public MiscWorkout(
 			//	string Name
@@ -32,7 +35,7 @@ namespace WorkoutLogger{
 			//	XmlSerializableContext XmlContext
 			//) : this(Name, SubstitutionOf, XmlContext, null) { }
 
-			
+
 			//public MiscWorkout(
 			//	XElement IncomingXml
 			//) : this(IncomingXml, null) { }
@@ -61,11 +64,6 @@ namespace WorkoutLogger{
 
 			#endregion
 			#region Implementations
-			#region Workout
-			public override string Scheme {
-				get { return SCHEME; }
-			}
-			#endregion
 			#region XMLSerializable
 			//public override void LoadFromXml(XElement incomingXml, XmlSerializableContext XmlContext){
 			//	base.LoadFromXml(incomingXml, XmlContext);
@@ -86,9 +84,13 @@ namespace WorkoutLogger{
 			//}
 
 			#endregion
+			#region object
+			public override string ToString() {
+				return $"{base.ToString()}\nDescription: {this.Description}";
+			}
+			#endregion
 			#endregion
 			#region private
-			private const string SCHEME = "Misc";
 			private string _Description;
 			#endregion
 

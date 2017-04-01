@@ -1,30 +1,34 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Linq;
+using XmlSerializer;
 
 namespace WorkoutLogger {
 	namespace Model {
-		public abstract class Workout {
+		[XmlSerializable]
+		public abstract class WL_Workout {
 			#region Properties
+			[XmlSerializable]
 			public string Name {
 				get => _Name;
 				set => _Name = value ?? "";
 			}
-			public int Id {
-				get => _Id;
-				set => _Id = value;
-			}
+			//[XmlSerializable(AsXAttribute = true)]
+			//public int Id {
+			//	get => _Id;
+			//	set => _Id = value;
+			//}
+			[XmlSerializable]
 			public string Comment{
 				get => _Comment;
 				set => _Comment = value;
 			}
-			public abstract string Scheme { get; }
 			#endregion
 			#region Constructors
 
 			#region Empty Constructors
 
-			protected Workout() { }
+			protected WL_Workout() { }
 
 			//protected Workout(
 			//	XElement IncomingXml
@@ -35,8 +39,8 @@ namespace WorkoutLogger {
 
 			#region Meaningful Constructors
 
-			protected Workout(
-				Workout clone
+			protected WL_Workout(
+				WL_Workout clone
 			){
 				
 			}
@@ -71,7 +75,7 @@ namespace WorkoutLogger {
 			//				? (from e in IncomingXml.Attributes("Id")
 			//				   select e.Value).SingleOrDefault()
 			//				: null 
-						
+
 			//		};
 			//		this.Name = info.Name;
 			//	}
@@ -93,6 +97,11 @@ namespace WorkoutLogger {
 
 			//	return retVal;
 			//}
+			#endregion
+			#region object
+			public override string ToString() {
+				return $"Name: {this.Name}\nComment: {this.Comment}";
+			}
 			#endregion
 			#endregion
 			#region private
