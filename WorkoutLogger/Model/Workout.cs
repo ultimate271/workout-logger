@@ -102,12 +102,30 @@ namespace WorkoutLogger {
 			public override string ToString() {
 				return $"Name: {this.Name}\nComment: {this.Comment}";
 			}
+			public override int GetHashCode() {
+				return ("" + this.Comment + this.Name).GetHashCode();
+			}
+			public override bool Equals(object obj) {
+				bool retVal = true;
+
+				//Check to make sure the types match and cast the parameter as a workout if they do
+				if (obj == null || GetType() != obj.GetType()) {
+					return false;
+				}
+				WL_Workout incomingWorkout = obj as WL_Workout;
+
+				retVal &= this.Comment == incomingWorkout.Comment;
+				retVal &= this.Name == incomingWorkout.Name;
+
+
+				return retVal;
+				
+			}
+
 			#endregion
 			#endregion
 			#region private
 			private string _Name = "";
-			//private XmlSerializableContext _XmlContext = new XmlSerializableContext();
-			private int _Id;
 			private string _Comment;
 			#endregion
 		}

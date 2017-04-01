@@ -11,18 +11,31 @@ namespace WorkoutLogger {
 	public class ConsoleView {
 
 		public static void Main(string[] args) {
-			WL_Workout w = XElement.Load("test.xml").DeserializeFromXml() as WL_Workout;
-			System.Console.WriteLine("{0}", w.SerializeToXml());
+			//WL_Workout w = XElement.Load("test.xml").DeserializeFromXml() as WL_Workout;
+			WL_Workout w1 = new WL_MiscWorkout() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
+			WL_Workout w2 = new WL_MiscWorkout() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
+			WL_Workout w3 = new WL_TimedWorkout() { Name = "Fran", Comment = "The gnarliest of workouts", Rounds = new List<string>(new string[] { "Thruster", "Pullup" }) };
+			System.Console.WriteLine("{0}", w1.SerializeToXml());
+			
 
 			Model.Model m = new Model.Model();
-			WL_Log log = new WL_Log() { DateCompleted = new DateTime(2017, 11, 23), Workout = w, Result = new WL_ScoreResult() { Score = 14 } };
-			m.AddLog(log);
-			System.Console.WriteLine(log.SerializeToXml().DeserializeFromXml().SerializeToXml());
+			WL_Log log = new WL_Log() { DateCompleted = new DateTime(2017, 11, 23), Workout = w1, Result = new WL_ScoreResult() { Score = 14 } };
+			WL_Log log2 = new WL_Log() { DateCompleted = new DateTime(2017, 3, 31), Workout = w1, Result = new WL_TimedResult() { Time = new TimeSpan(0, 12, 14) } };
+			WL_Log log3 = new WL_Log() { DateCompleted = new DateTime(), Workout = w1, Result = new WL_MiscResult() { Description = "Some really obscure result" } };
+			//m.AddLog(log);
+			//m.AddLog(log2);
+			//m.AddLog(log3);
+			//System.Console.WriteLine(log.SerializeToXml().DeserializeFromXml().SerializeToXml());
+			//System.Console.WriteLine(log2.SerializeToXml().DeserializeFromXml().SerializeToXml());
+			//System.Console.WriteLine(log3.SerializeToXml());
+			System.Console.WriteLine(w1.Equals(w3));
+			System.Console.WriteLine(w3.Equals(w1));
 
+			
 
 			//m.Workouts.Add(w);
 			
-			//Workout w = new MiscWorkout() { Id = 1, Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
+			
 			//w.SerializeToXml().Save("test.xml");
 			//System.Console.WriteLine("{0}\n{1}\n{2}", w, w.SerializeToXml("AThing"), w.SerializeToXml("AThing").DeserializeFromXml());
 			

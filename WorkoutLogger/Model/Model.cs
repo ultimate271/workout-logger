@@ -61,6 +61,11 @@ namespace WorkoutLogger {
 			#endregion
 			#endregion
 
+			/// <summary>
+			/// Returns true if the result of the log is a valid type for the workout of the log
+			/// </summary>
+			/// <param name="log"></param>
+			/// <returns></returns>
 			private bool IsWellTyped(WL_Log log){
 				//Get the result type of the log
 				Type resultType = log.Result.GetType();
@@ -70,7 +75,7 @@ namespace WorkoutLogger {
 				WL_ResultCompatabilityAttribute compatibiiltyAtt = resultType.GetCustomAttribute<WL_ResultCompatabilityAttribute>();
 				//check the workout type of the log against all the possible compatible types of the result
 				foreach (Type compatibleType in compatibiiltyAtt.WorkoutTypes){
-					if (log.Workout.GetType() == compatibleType) return true;
+					if (compatibleType.IsAssignableFrom(log.Workout.GetType())) return true;
 				}
 				//None of the compatible types matched, so return false
 				return false;

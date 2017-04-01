@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MiscResult.cs" />
+    <Compile Include="TimedResult.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MiscWorkout.cs" />
     <Compile Include="Model.cs" />
@@ -47,6 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result.cs" />
     <Compile Include="ScoreResult.cs" />
+    <Compile Include="TimedWorkout.cs" />
     <Compile Include="Workout.cs" />
     <Compile Include="Declarations.cs" />
     <Compile Include="XmlSerialization\XmlSerializer.cs" />

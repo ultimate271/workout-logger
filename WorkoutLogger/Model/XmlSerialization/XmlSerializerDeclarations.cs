@@ -45,7 +45,40 @@ namespace XmlSerializer{
 				this.Day,
 				this.Hour,
 				this.Minute,
-				this.Second);
+				this.Second,
+				this.Millisecond
+			);
+		}
+	}
+	[XmlSerializable]
+	public class XmlSerializableTimeSpan{
+		[XmlSerializable]
+		public int Days { get; set; }
+		[XmlSerializable]
+		public int Hours { get; set; }
+		[XmlSerializable]
+		public int Minutes { get; set; }
+		[XmlSerializable]
+		public int Seconds { get; set; }
+		[XmlSerializable]
+		public int Milliseconds { get; set; }
+
+		public XmlSerializableTimeSpan() { }
+		public XmlSerializableTimeSpan(TimeSpan t){
+			this.Days = t.Days;
+			this.Hours = t.Hours;
+			this.Minutes = t.Minutes;
+			this.Seconds = t.Seconds;
+			this.Milliseconds = t.Milliseconds;
+		}
+		public TimeSpan ToTimeSpan(){
+			return new TimeSpan(
+				this.Days,
+				this.Hours,
+				this.Minutes,
+				this.Seconds,
+				this.Milliseconds
+			);
 		}
 	}
 

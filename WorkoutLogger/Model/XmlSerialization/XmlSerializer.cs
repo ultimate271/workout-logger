@@ -25,6 +25,10 @@ namespace XmlSerializer{
 				retVal = (new XmlSerializableDateTime((DateTime)o)).SerializeToXml(rootName);
 				retVal.Attribute("type").SetValue("DateTime");
 			}
+			else if (o is TimeSpan){
+				retVal = (new XmlSerializableTimeSpan((TimeSpan)o)).SerializeToXml(rootName);
+				retVal.Attribute("type").SetValue("TimeSpan");
+			}
 			else if (o.IsGenericList()) {
 				Type genericType = o.GetType().GetGenericArguments().SingleOrDefault(); //Will throw an exception if o is an IList that has multiple generic types somehow
 				if (genericType == null) { throw new XmlSerializerException("XmlSerializerExtensions.SerializeToXml threw exception in case where o should have been a generic list but isn't somehow"); }
@@ -58,7 +62,7 @@ namespace XmlSerializer{
 			object retVal = null;
 
 			//string typeValue = x.AttributeValue("type");
-			Type returnType = x.AttributeValue("type").StringToType(a) ?? throw new XmlSerializerException($"{x.AttributeValue("type")} is not a type in Assembly {a.ToString()}");
+			Type returnType = x.Attribute("type").Value.StringToType(a) ?? throw new XmlSerializerException($"{x.Attribute("type").Value} is not a type in Assembly {a.ToString()}");
 
 			if (returnType == typeof(int)) {
 				retVal = Int32.Parse(x.Value);
@@ -71,7 +75,10 @@ namespace XmlSerializer{
 			else if (returnType == typeof(DateTime)){
 				x.Attribute("type").SetValue(typeof(XmlSerializableDateTime).TypeToString());
 				retVal = (x.DeserializeFromXml(a) as XmlSerializableDateTime).ToDateTime();
-				
+			}
+			else if (returnType == typeof(TimeSpan)){
+				x.Attribute("type").SetValue(typeof(XmlSerializableTimeSpan).TypeToString());
+				retVal = (x.DeserializeFromXml(a) as XmlSerializableTimeSpan).ToTimeSpan();
 			}
 			else if (returnType.IsGenericList()) {
 				//string ofValue = x.AttributeValue("of");
@@ -79,7 +86,7 @@ namespace XmlSerializer{
 				Type ofType = returnType.GetGenericArguments().SingleOrDefault();
 
 				foreach (XElement child in x.Elements()) {
-					Type descType = child.AttributeValue("type").StringToType();
+					Type descType = child.Attribute("type").Value.StringToType();
 					if (!ofType.IsAssignableFrom(descType)) throw new XmlSerializerException("XmlSerializerExtensions.DeserializeFromXml: List member type mismatch");
 					tempRetVal.Add(child.DeserializeFromXml(a));
 				}
@@ -138,7 +145,7 @@ namespace XmlSerializer{
 			return IsXmlSerializable(o.GetType());
 		}
 		public static bool IsXmlSerializable(this Type t){
-			if (t == typeof(int) || t == typeof(string) || t.IsGenericList() || t == typeof(DateTime)){
+			if (t == typeof(int) || t == typeof(string) || t.IsGenericList() || t == typeof(DateTime) || t == typeof(TimeSpan)){
 				return true;
 			}
 			return t.IsDefined(typeof(XmlSerializableAttribute));
@@ -164,12 +171,12 @@ namespace XmlSerializer{
 		/// <param name="x"></param>
 		/// <param name="attributeName"></param>
 		/// <returns>The value of the attribute with attributeName, or null. Throws an exception if there is more than one attribute with Name == attribtueName</returns>
-		public static string AttributeValue(this XElement x, string attributeName){
-			return
-				(from xatt in x.Attributes()
-				 where xatt.Name == attributeName
-				 select xatt.Value).SingleOrDefault(); //Throws an exception if there is more than one attribute with Name == attributeName
-		}
+		//public static string AttributeValue(this XElement x, string attributeName){
+		//	return
+		//		(from xatt in x.Attributes()
+		//		 where xatt.Name == attributeName
+		//		 select xatt.Value).SingleOrDefault(); //Throws an exception if there is more than one attribute with Name == attributeName
+		//}
 
 
 		public static Type StringToType(this string s){
@@ -184,14 +191,15 @@ namespace XmlSerializer{
 			if (s == "int") { retVal = typeof(int); }
 			else if (s == "string") { retVal = typeof(string); }
 			else if (s == "DateTime") { retVal = typeof(DateTime); }
-			else if (m.Success){
+			else if (s == "TimeSpan") { retVal = typeof(TimeSpan); }
+			else if (m.Success) {
 				retVal = typeof(List<>).MakeGenericType(m.Groups[1].Value.StringToType(a));
 			}
 			else {
 				retVal =
 					(from ti in a.DefinedTypes
-					where ti.Name == s
-					select ti as Type).SingleOrDefault();
+					 where ti.Name == s
+					 select ti as Type).SingleOrDefault();
 			}
 			return retVal;
 		}

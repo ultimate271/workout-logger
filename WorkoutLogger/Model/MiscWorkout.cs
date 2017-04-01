@@ -88,6 +88,23 @@ namespace WorkoutLogger{
 			public override string ToString() {
 				return $"{base.ToString()}\nDescription: {this.Description}";
 			}
+			
+			public override bool Equals(object obj) {
+				if (obj == null || GetType() != obj.GetType()) {
+					return false;
+				}
+
+				WL_MiscWorkout w = obj as WL_MiscWorkout;
+				if (this.Description != w.Description) return false;				
+				return base.Equals(obj);
+			}
+
+
+			public override int GetHashCode() {
+
+				return base.GetHashCode() * this.Description.GetHashCode();
+			}
+			
 			#endregion
 			#endregion
 			#region private
