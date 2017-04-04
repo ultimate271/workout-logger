@@ -13,8 +13,9 @@ namespace XmlSerializer{
 		public static object DeserializeFromXml(this XElement x) { return x.DeserializeFromXml(typeof(XmlSerializerExtensions).Assembly); }
 		#endregion
 		
-		//TODO Add "DateTime" and "TimeSpan" as a potential base case
 		public static XElement SerializeToXml(this object o, string rootName){
+
+			if (o is null) return null;
 			XElement retVal = new XElement(rootName);
 			retVal.Add(new XAttribute("type", o.GetType().TypeToString()));
 			
@@ -33,7 +34,7 @@ namespace XmlSerializer{
 				Type genericType = o.GetType().GetGenericArguments().SingleOrDefault(); //Will throw an exception if o is an IList that has multiple generic types somehow
 				if (genericType == null) { throw new XmlSerializerException("XmlSerializerExtensions.SerializeToXml threw exception in case where o should have been a generic list but isn't somehow"); }
 				if (genericType.IsXmlSerializable()) {
-					//string ofString = genericType.TypeToString();
+																								//string ofString = genericType.TypeToString();
 					foreach (object listObj in (o as IList)) {
 						string nodeName = listObj.GetType().IsGenericList() ? "list" : listObj.GetType().TypeToString();
 						retVal.Add(listObj.SerializeToXml(nodeName));
@@ -44,6 +45,7 @@ namespace XmlSerializer{
 				if (!o.IsXmlSerializable()) throw new XmlSerializerException("o is not xml Serializable");
 				foreach(PropertyInfo p in o.GetType().GetProperties()){
 					if (p.IsXmlSerializable()){
+						//This "if" is to tell the thing to serialize this property as an attribute. Only ints and strings can be XAttributes.
 						if (p.GetXmlAttribute().AsXAttribute) {
 							if (!typeof(int).IsAssignableFrom(p.PropertyType) && !typeof(string).IsAssignableFrom(p.PropertyType)) throw new XmlSerializerException($"Cannot serialize non integer or non string type {p.PropertyType} to an XAttribute");
 							retVal.Add(new XAttribute(p.Name, p.GetValue(o)));

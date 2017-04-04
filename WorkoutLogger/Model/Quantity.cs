@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Linq;
+using System.Collections.Generic;
 using XmlSerializer;
 
 namespace WorkoutLogger {
 	namespace Model {
-		public class WL_Movement {
-			
+		[XmlSerializable]
+		public abstract class WL_Quantity {
 		}
 	}
 }

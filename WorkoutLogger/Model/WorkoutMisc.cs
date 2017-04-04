@@ -10,7 +10,7 @@ namespace WorkoutLogger{
 		/// or the workout is so wonky that it doesn't fit into any scheme and its "one of a kind" so to speak
 		/// </summary>
 		[XmlSerializable]
-		public class WL_MiscWorkout : WL_Workout{
+		public class WL_WorkoutMisc : WL_Workout{
 			#region Properties
 			[XmlSerializable]
 			public string Description {
@@ -20,7 +20,7 @@ namespace WorkoutLogger{
 			#endregion
 			#region Constructors
 			#region Empty Constructors
-			public WL_MiscWorkout() : base() { }
+			public WL_WorkoutMisc() : base() { }
 			//public MiscWorkout() : this (null, null, null, null) {}
 			//public MiscWorkout(
 			//	string Name
@@ -94,7 +94,7 @@ namespace WorkoutLogger{
 					return false;
 				}
 
-				WL_MiscWorkout w = obj as WL_MiscWorkout;
+				WL_WorkoutMisc w = obj as WL_WorkoutMisc;
 				if (this.Description != w.Description) return false;				
 				return base.Equals(obj);
 			}

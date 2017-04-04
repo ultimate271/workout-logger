@@ -7,10 +7,13 @@ using System.Runtime.Serialization;
 
 namespace WorkoutLogger {
 	namespace Model {
+		/// <summary>
+		/// Used to tag any class which extends WL_Result with the types of workouts that result is compatible with
+		/// </summary>
 		[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 		public class WL_ResultCompatabilityAttribute : Attribute{
 			/// <summary>
-			/// Indicates the types of workouts that the class that is tagged by this attribute is compatible with
+			/// Indicates the types of workouts that the WL_Result class that is tagged by this attribute is compatible with
 			/// </summary>
 			public Type[] WorkoutTypes { get; set; }
 			public WL_ResultCompatabilityAttribute(params Type[] WorkoutTypes){
@@ -123,6 +126,7 @@ namespace WorkoutLogger {
 		//	}
 		//}
 		#endregion
+		/* A bunch of stuff that was used for testing the xml serializer
 		#region Debug Stuff
 		[XmlSerializable]
 		public class DerivedClass : AnotherTestClass{
@@ -202,5 +206,6 @@ namespace WorkoutLogger {
 			}
 		}
 		#endregion
+		*/
 	}
 }

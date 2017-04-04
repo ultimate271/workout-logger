@@ -12,16 +12,30 @@ namespace WorkoutLogger {
 
 		public static void Main(string[] args) {
 			//WL_Workout w = XElement.Load("test.xml").DeserializeFromXml() as WL_Workout;
-			WL_Workout w1 = new WL_MiscWorkout() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
-			WL_Workout w2 = new WL_MiscWorkout() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
-			WL_Workout w3 = new WL_TimedWorkout() { Name = "Fran", Comment = "The gnarliest of workouts", Rounds = new List<string>(new string[] { "Thruster", "Pullup" }) };
-			System.Console.WriteLine("{0}", w1.SerializeToXml());
-			
+			WL_Workout w1 = new WL_WorkoutMisc() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
+			WL_Workout w2 = new WL_WorkoutMisc() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
+			//WL_Workout w3 = new WL_WorkoutTimed() { Name = "Fran", Comment = "The gnarliest of workouts", Rounds = new List<string>(new string[] { "Thruster", "Pullup" }) };
+			List < WL_Round > rounds = new List<WL_Round>();
+			rounds.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 21 }, Load = new WL_Load() { Load = 95 } });
+			rounds.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 21 } });
+			rounds.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 15 }, Load = new WL_Load() { Load = 95 } });
+			rounds.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 15 } });
+			rounds.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 9 }, Load = new WL_Load() { Load = 95 } });
+			rounds.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 9 } });
+
+			WL_Workout w3 = new WL_WorkoutTimed() { Name = "Fran", Comment = "Girls Benchmark", Rounds = new List<WL_Round>(rounds) };
+			rounds.Add(new WL_Round() { Movement = "What the Fuck", Quantity = new WL_QuantityReps() { Reps = 666 } });
+
+
+			System.Console.WriteLine("{0}", w3.SerializeToXml().DeserializeFromXml().SerializeToXml());
+			System.Console.WriteLine("{0}", w3.ToString());
+			System.Console.WriteLine("{0}", w3.SerializeToXml().DeserializeFromXml().ToString());
+
 
 			Model.Model m = new Model.Model();
-			WL_Log log = new WL_Log() { DateCompleted = new DateTime(2017, 11, 23), Workout = w1, Result = new WL_ScoreResult() { Score = 14 } };
-			WL_Log log2 = new WL_Log() { DateCompleted = new DateTime(2017, 3, 31), Workout = w1, Result = new WL_TimedResult() { Time = new TimeSpan(0, 12, 14) } };
-			WL_Log log3 = new WL_Log() { DateCompleted = new DateTime(), Workout = w1, Result = new WL_MiscResult() { Description = "Some really obscure result" } };
+			WL_Log log = new WL_Log() { DateCompleted = new DateTime(2017, 11, 23), Workout = w1, Result = new WL_ResultScore() { Score = 14 } };
+			WL_Log log2 = new WL_Log() { DateCompleted = new DateTime(2017, 3, 31), Workout = w1, Result = new WL_ResultTimed() { Time = new TimeSpan(0, 12, 14) } };
+			WL_Log log3 = new WL_Log() { DateCompleted = new DateTime(), Workout = w1, Result = new WL_ResultMisc() { Description = "Some really obscure result" } };
 			//m.AddLog(log);
 			//m.AddLog(log2);
 			//m.AddLog(log3);

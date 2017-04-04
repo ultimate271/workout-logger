@@ -42,7 +42,8 @@ namespace WorkoutLogger {
 			protected WL_Workout(
 				WL_Workout clone
 			){
-				
+				this.Comment = clone.Comment;
+				this.Name = clone.Name;
 			}
 
 			//protected Workout(

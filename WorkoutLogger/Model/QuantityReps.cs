@@ -6,12 +6,12 @@ using XmlSerializer;
 namespace WorkoutLogger {
 	namespace Model {
 		[XmlSerializable]
-		public class WL_TimedWorkout : WL_Workout {
+		public class WL_QuantityReps : WL_Quantity {
 			[XmlSerializable]
-			public List<string> Rounds { get; set; }
+			public int Reps { get; set; }
 
-			public override bool Equals(object obj) {
-				return base.Equals(obj);
+			public override string ToString() {
+				return $"{this.Reps}reps";
 			}
 		}
 	}
