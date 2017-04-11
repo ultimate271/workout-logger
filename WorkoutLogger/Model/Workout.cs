@@ -101,7 +101,9 @@ namespace WorkoutLogger {
 			#endregion
 			#region object
 			public override string ToString() {
-				return $"Name: {this.Name}\nComment: {this.Comment}";
+				return
+					(String.IsNullOrEmpty(this.Name) ? "Anonymous Workout" : $"{this.Name}") +
+					(String.IsNullOrEmpty(this.Comment) ? "" : $"\n{this.Comment}");
 			}
 			public override int GetHashCode() {
 				return ("" + this.Comment + this.Name).GetHashCode();

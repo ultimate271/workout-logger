@@ -24,8 +24,28 @@ namespace WorkoutLogger{
 			[XmlSerializable]
 			public WL_Load Load { get; set; }
 
+			// override object.Equals
+			public override bool Equals(object obj) {
+				if (obj == null || GetType() != obj.GetType()) {
+					return false;
+				}
+				WL_Round inRound = (WL_Round)obj;
+
+				return
+					this.Movement == inRound.Movement &&
+					this.Quantity.Equals(inRound.Quantity) &&
+					this.Load.Equals(inRound.Load);
+			}
+
+			// override object.GetHashCode
+			public override int GetHashCode() {
+				// TODO: write your implementation of GetHashCode() here
+				throw new NotImplementedException();
+				return base.GetHashCode();
+			}
 			public override string ToString() {
-				return $"Round: {this.Movement} {this.Quantity} {this.Load}";
+				return $"{this.Quantity} of {this.Movement}" +
+					(this.Load != null ? $" @ {this.Load}" : "");
 			}
 		}
 	}

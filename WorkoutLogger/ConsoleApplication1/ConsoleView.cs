@@ -42,7 +42,9 @@ namespace WorkoutLogger {
 			//System.Console.WriteLine(log.SerializeToXml().DeserializeFromXml().SerializeToXml());
 			//System.Console.WriteLine(log2.SerializeToXml().DeserializeFromXml().SerializeToXml());
 			//System.Console.WriteLine(log3.SerializeToXml());
-			System.Console.WriteLine(w1.Equals(w3));
+			WL_Round round1 = new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 21 }, Load = new WL_Load() { Load = 95 } };
+			WL_Round round2 = new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 21 }, Load = new WL_Load() { Load = 95 } };
+			System.Console.WriteLine(round1.Equals(round2));
 			System.Console.WriteLine(w3.Equals(w1));
 
 			

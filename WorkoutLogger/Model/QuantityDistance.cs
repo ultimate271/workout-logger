@@ -12,6 +12,19 @@ namespace WorkoutLogger {
 			public override string ToString() {
 				return $"{Distance}m"; //TODO change this method when a format provider is implemented
 			}
+
+			public override bool Equals(object obj) {
+				if (obj == null || GetType() != obj.GetType()) {
+					return false;
+				}
+				WL_QuantityDistance inDistance = (WL_QuantityDistance)obj;
+
+				return this.Distance == inDistance.Distance;
+			}
+
+			public override int GetHashCode() {
+				return this.Distance.GetHashCode();
+			}
 		}
 	}
 }

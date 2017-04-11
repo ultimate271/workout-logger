@@ -13,6 +13,21 @@ namespace WorkoutLogger {
 			public override string ToString() {
 				return $"{this.Load}#"; //TODO change this method when a format provider is added
 			}
+
+			public override bool Equals(object obj) {
+
+				if (obj == null || GetType() != obj.GetType()) {
+					return false;
+				}
+
+
+				WL_Load inLoad = (WL_Load)obj;
+				return this.Load == inLoad.Load;
+			}
+
+			public override int GetHashCode() {
+				return this.Load.GetHashCode();
+			}
 		}
 	}
 }
