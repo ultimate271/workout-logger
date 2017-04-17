@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 
 namespace WorkoutLogger {
-	namespace Model {
+	
 		/// <summary>
 		/// Lets start with some requirements for Model
 		/// The "top level" element in the model will be the List of Logs.
@@ -81,5 +81,5 @@ namespace WorkoutLogger {
 				return false;
 			}
 		}
-	}
+	
 }

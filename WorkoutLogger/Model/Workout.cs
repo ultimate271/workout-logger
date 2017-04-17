@@ -4,7 +4,7 @@ using System.Xml.Linq;
 using XmlSerializer;
 
 namespace WorkoutLogger {
-	namespace Model {
+	
 		[XmlSerializable]
 		public abstract class WL_Workout {
 			#region Properties
@@ -28,8 +28,6 @@ namespace WorkoutLogger {
 
 			#region Empty Constructors
 
-			protected WL_Workout() { }
-
 			//protected Workout(
 			//	XElement IncomingXml
 			//) : this(IncomingXml, null) { }
@@ -38,13 +36,6 @@ namespace WorkoutLogger {
 
 
 			#region Meaningful Constructors
-
-			protected WL_Workout(
-				WL_Workout clone
-			){
-				this.Comment = clone.Comment;
-				this.Name = clone.Name;
-			}
 
 			//protected Workout(
 			//	XElement IncomingXml, 
@@ -103,10 +94,10 @@ namespace WorkoutLogger {
 			public override string ToString() {
 				return $"Name: {this.Name}\nComment: {this.Comment}";
 			}
-			public override int GetHashCode() {
+			public int MetadataGetHashCode() {
 				return ("" + this.Comment + this.Name).GetHashCode();
 			}
-			public override bool Equals(object obj) {
+			public bool MetadataEquals(object obj) {
 				bool retVal = true;
 
 				//Check to make sure the types match and cast the parameter as a workout if they do
@@ -130,5 +121,5 @@ namespace WorkoutLogger {
 			private string _Comment;
 			#endregion
 		}
-	}
+	
 }

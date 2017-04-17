@@ -5,17 +5,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using XmlSerializer;
-using WorkoutLogger.Model;
+//using WorkoutLogger.Model;
+using WorkoutLogger;
 
 namespace WorkoutLogger {
 	public class ConsoleView {
 
 		public static void Main(string[] args) {
-			//WL_Workout w = XElement.Load("test.xml").DeserializeFromXml() as WL_Workout;
-			WL_Workout w1 = new WL_WorkoutMisc() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
-			WL_Workout w2 = new WL_WorkoutMisc() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
-			//WL_Workout w3 = new WL_WorkoutTimed() { Name = "Fran", Comment = "The gnarliest of workouts", Rounds = new List<string>(new string[] { "Thruster", "Pullup" }) };
-			List < WL_Round > rounds = new List<WL_Round>();
+
+			List<WL_Round> rounds = new List<WL_Round>();
 			rounds.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 21 }, Load = new WL_Load() { Load = 95 } });
 			rounds.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 21 } });
 			rounds.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 15 }, Load = new WL_Load() { Load = 95 } });
@@ -23,35 +21,55 @@ namespace WorkoutLogger {
 			rounds.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 9 }, Load = new WL_Load() { Load = 95 } });
 			rounds.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 9 } });
 
-			WL_Workout w3 = new WL_WorkoutTimed() { Name = "Fran", Comment = "Girls Benchmark", Rounds = new List<WL_Round>(rounds) };
-			rounds.Add(new WL_Round() { Movement = "What the Fuck", Quantity = new WL_QuantityReps() { Reps = 666 } });
+			List<WL_Round> rounds2 = new List<WL_Round>();
+			rounds2.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 21 }, Load = new WL_Load() { Load = 95 } });
+			rounds2.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 21 } });
+			rounds2.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 15 }, Load = new WL_Load() { Load = 95 } });
+			rounds2.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 15 } });
+			rounds2.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 9 }, Load = new WL_Load() { Load = 95 } });
+			rounds2.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 9 } });
+
+			//WL_Workout workout = new WL_WorkoutMisc() { Comment = "A Comment", Description = "A Description", Name = "A Name" };
+			//WL_Workout miscWorkout = new WL_WorkoutMisc { Comment = "A Comment", Description = "A Description", Name = "A Name" };
+			WL_Workout timedWorkout1 = new WL_WorkoutTimed { Comment = "A Comment", Name = "A Name", Rounds = rounds };
+			WL_Workout timedWorkout2 = new WL_WorkoutTimed { Comment = "A Comment", Name = "A Name", Rounds = rounds2 };
+			
+			//System.Console.WriteLine($"{workout}\n{miscWorkout}\n{workout.Equals(miscWorkout)}\n{miscWorkout.Equals(workout)}");
+			System.Console.WriteLine($"{timedWorkout1}\n{timedWorkout2}\n{timedWorkout1.Equals(timedWorkout2)}\n{timedWorkout2.Equals(timedWorkout1)}");
+			////WL_Workout w = XElement.Load("test.xml").DeserializeFromXml() as WL_Workout;
+			//WL_Workout w1 = new WL_WorkoutMisc() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
+			//WL_Workout w2 = new WL_WorkoutMisc() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
+			////WL_Workout w3 = new WL_WorkoutTimed() { Name = "Fran", Comment = "The gnarliest of workouts", Rounds = new List<string>(new string[] { "Thruster", "Pullup" }) };
+
+			//WL_Workout w3 = new WL_WorkoutTimed() { Name = "Fran", Comment = "Girls Benchmark", Rounds = new List<WL_Round>(rounds) };
+			//rounds.Add(new WL_Round() { Movement = "What the Fuck", Quantity = new WL_QuantityReps() { Reps = 666 } });
 
 
-			System.Console.WriteLine("{0}", w3.SerializeToXml().DeserializeFromXml().SerializeToXml());
-			System.Console.WriteLine("{0}", w3.ToString());
-			System.Console.WriteLine("{0}", w3.SerializeToXml().DeserializeFromXml().ToString());
+			//System.Console.WriteLine("{0}", w3.SerializeToXml().DeserializeFromXml().SerializeToXml());
+			//System.Console.WriteLine("{0}", w3.ToString());
+			//System.Console.WriteLine("{0}", w3.SerializeToXml().DeserializeFromXml().ToString());
 
 
-			Model.Model m = new Model.Model();
-			WL_Log log = new WL_Log() { DateCompleted = new DateTime(2017, 11, 23), Workout = w1, Result = new WL_ResultScore() { Score = 14 } };
-			WL_Log log2 = new WL_Log() { DateCompleted = new DateTime(2017, 3, 31), Workout = w1, Result = new WL_ResultTimed() { Time = new TimeSpan(0, 12, 14) } };
-			WL_Log log3 = new WL_Log() { DateCompleted = new DateTime(), Workout = w1, Result = new WL_ResultMisc() { Description = "Some really obscure result" } };
-			//m.AddLog(log);
-			//m.AddLog(log2);
-			//m.AddLog(log3);
-			//System.Console.WriteLine(log.SerializeToXml().DeserializeFromXml().SerializeToXml());
-			//System.Console.WriteLine(log2.SerializeToXml().DeserializeFromXml().SerializeToXml());
-			//System.Console.WriteLine(log3.SerializeToXml());
-			System.Console.WriteLine(w1.Equals(w3));
-			System.Console.WriteLine(w3.Equals(w1));
+			//Model m = new Model();
+			//WL_Log log = new WL_Log() { DateCompleted = new DateTime(2017, 11, 23), Workout = w1, Result = new WL_ResultScore() { Score = 14 } };
+			//WL_Log log2 = new WL_Log() { DateCompleted = new DateTime(2017, 3, 31), Workout = w1, Result = new WL_ResultTimed() { Time = new TimeSpan(0, 12, 14) } };
+			//WL_Log log3 = new WL_Log() { DateCompleted = new DateTime(), Workout = w1, Result = new WL_ResultMisc() { Description = "Some really obscure result" } };
+			////m.AddLog(log);
+			////m.AddLog(log2);
+			////m.AddLog(log3);
+			////System.Console.WriteLine(log.SerializeToXml().DeserializeFromXml().SerializeToXml());
+			////System.Console.WriteLine(log2.SerializeToXml().DeserializeFromXml().SerializeToXml());
+			////System.Console.WriteLine(log3.SerializeToXml());
+			//System.Console.WriteLine(w1.Equals(w3));
+			//System.Console.WriteLine(w3.Equals(w1));
 
 			
 
-			//m.Workouts.Add(w);
+			////m.Workouts.Add(w);
 			
 			
-			//w.SerializeToXml().Save("test.xml");
-			//System.Console.WriteLine("{0}\n{1}\n{2}", w, w.SerializeToXml("AThing"), w.SerializeToXml("AThing").DeserializeFromXml());
+			////w.SerializeToXml().Save("test.xml");
+			////System.Console.WriteLine("{0}\n{1}\n{2}", w, w.SerializeToXml("AThing"), w.SerializeToXml("AThing").DeserializeFromXml());
 			
 
 

@@ -6,7 +6,7 @@ using XmlSerializer;
 using System.Runtime.Serialization;
 
 namespace WorkoutLogger {
-	namespace Model {
+	
 		/// <summary>
 		/// Used to tag any class which extends WL_Result with the types of workouts that result is compatible with
 		/// </summary>
@@ -207,5 +207,5 @@ namespace WorkoutLogger {
 		}
 		#endregion
 		*/
-	}
+	
 }

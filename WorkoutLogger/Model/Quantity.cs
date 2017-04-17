@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using XmlSerializer;
 
 namespace WorkoutLogger {
-	namespace Model {
-		[XmlSerializable]
-		public abstract class WL_Quantity {
-		}
+	[XmlSerializable]
+	public abstract class WL_Quantity {
 	}
 }

@@ -4,7 +4,6 @@ using System.Xml.Linq;
 using XmlSerializer;
 
 namespace WorkoutLogger{
-	namespace Model{
 		[XmlSerializable]
 		public class WL_Log{
 			[XmlSerializable]
@@ -16,5 +15,5 @@ namespace WorkoutLogger{
 			[XmlSerializable]
 			public WL_Result Result { get; set; }
 		}
-	}
+
 }

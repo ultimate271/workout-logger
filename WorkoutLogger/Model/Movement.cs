@@ -4,9 +4,9 @@ using System.Xml.Linq;
 using XmlSerializer;
 
 namespace WorkoutLogger {
-	namespace Model {
-		public class WL_Movement {
+	
+	public class WL_Movement {
 			
-		}
 	}
+	
 }
