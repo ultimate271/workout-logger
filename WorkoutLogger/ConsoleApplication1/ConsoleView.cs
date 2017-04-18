@@ -13,29 +13,39 @@ namespace WorkoutLogger {
 
 		public static void Main(string[] args) {
 
-			List<WL_Round> rounds = new List<WL_Round>();
-			rounds.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 21 }, Load = new WL_Load() { Load = 95 } });
-			rounds.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 21 } });
-			rounds.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 15 }, Load = new WL_Load() { Load = 95 } });
-			rounds.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 15 } });
-			rounds.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 9 }, Load = new WL_Load() { Load = 95 } });
-			rounds.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 9 } });
-
-			List<WL_Round> rounds2 = new List<WL_Round>();
-			rounds2.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 21 }, Load = new WL_Load() { Load = 95 } });
-			rounds2.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 21 } });
-			rounds2.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 15 }, Load = new WL_Load() { Load = 95 } });
-			rounds2.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 15 } });
-			rounds2.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 9 }, Load = new WL_Load() { Load = 95 } });
-			rounds2.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 9 } });
+			List<WL_Round> rounds = new List<WL_Round> {
+				new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 21 }, Load = new WL_Load() { Load = 95 } },
+				new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 21 } },
+				new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 15 }, Load = new WL_Load() { Load = 95 } },
+				new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 15 } },
+				new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 9 }, Load = new WL_Load() { Load = 95 } },
+				new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 9 } }
+			};
+			List<WL_Round> rounds2 = new List<WL_Round> {
+				new WL_Round() { Movement = "Clean", Quantity = new WL_QuantityReps() { Reps = 21 }, Load = new WL_Load() { Load = 135 } },
+				new WL_Round() { Movement = "Dip", Quantity = new WL_QuantityReps() { Reps = 21 } },
+				new WL_Round() { Movement = "Clean", Quantity = new WL_QuantityReps() { Reps = 15 }, Load = new WL_Load() { Load = 135 } },
+				new WL_Round() { Movement = "Dip", Quantity = new WL_QuantityReps() { Reps = 15 } },
+				new WL_Round() { Movement = "Clean", Quantity = new WL_QuantityReps() { Reps = 9 }, Load = new WL_Load() { Load = 135 } },
+				new WL_Round() { Movement = "Dip", Quantity = new WL_QuantityReps() { Reps = 9 } }
+			};
 
 			//WL_Workout workout = new WL_WorkoutMisc() { Comment = "A Comment", Description = "A Description", Name = "A Name" };
 			//WL_Workout miscWorkout = new WL_WorkoutMisc { Comment = "A Comment", Description = "A Description", Name = "A Name" };
-			WL_Workout timedWorkout1 = new WL_WorkoutTimed { Comment = "A Comment", Name = "A Name", Rounds = rounds };
-			WL_Workout timedWorkout2 = new WL_WorkoutTimed { Comment = "A Comment", Name = "A Name", Rounds = rounds2 };
+			WL_Workout timedWorkout1 = new WL_WorkoutTimed { Comment = "A Comment", Name = "Fran", Rounds = rounds };
+			WL_Workout timedWorkout2 = new WL_WorkoutTimed { Comment = "A Comment", Name = "Elizabeth", Rounds = rounds2 };
+
+			List<WL_Workout> Workouts = new List<WL_Workout> {
+				timedWorkout1,
+				timedWorkout2
+			};
+			System.Console.WriteLine(Workouts.SerializeToXml().DeserializeFromXml().SerializeToXml());
+
+			//System.Console.WriteLine("{0}", timedWorkout1.SerializeToXml());
+			//System.Console.WriteLine("{0}", timedWorkout2.SerializeToXml());
 			
 			//System.Console.WriteLine($"{workout}\n{miscWorkout}\n{workout.Equals(miscWorkout)}\n{miscWorkout.Equals(workout)}");
-			System.Console.WriteLine($"{timedWorkout1}\n{timedWorkout2}\n{timedWorkout1.Equals(timedWorkout2)}\n{timedWorkout2.Equals(timedWorkout1)}");
+			//System.Console.WriteLine($"{timedWorkout1}\n{timedWorkout2}\n{timedWorkout1.Equals(timedWorkout2)}\n{timedWorkout2.Equals(timedWorkout1)}");
 			////WL_Workout w = XElement.Load("test.xml").DeserializeFromXml() as WL_Workout;
 			//WL_Workout w1 = new WL_WorkoutMisc() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
 			//WL_Workout w2 = new WL_WorkoutMisc() { Name = "Fran", Comment = "The gnarliest of workouts", Description = "21-15-9 Thrusters and Pullups" };
