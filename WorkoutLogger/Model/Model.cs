@@ -4,7 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace WorkoutLogger {
+using WLCore;
+
+namespace WLModel{
 	
 		/// <summary>
 		/// Lets start with some requirements for Model

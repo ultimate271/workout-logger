@@ -8,7 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorkoutLogger.Properties {
+namespace WLVEntry
+{
 
 
 	/// <summary>

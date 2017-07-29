@@ -5,14 +5,109 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using XmlSerializer;
-//using WorkoutLogger.Model;
-using WorkoutLogger;
+using WLCore;
 
-namespace WorkoutLogger {
-	public class ConsoleView {
+namespace WLConsole {
+	public class Counter {
+		private int threshold;
+		private int count = 0;
+		public event EventHandler<ThresholdReachedEventArgs> ThresholdReached;
+
+		public void SetThreshold(int threshold) {
+			this.threshold = threshold;
+		}
+		public void IncreaseCount() {
+			count += 1;
+			if (count >= threshold) {
+				ThresholdReached?.Invoke(this, new ThresholdReachedEventArgs() { Message = $"{this.count} is past the {this.threshold} threshold" });
+				//EventPublisherThresholdReached(new Counter_ThresholdReachedEventArgs() { Message = $"{this.count} is past the {this.threshold} threshold" });
+			}
+		}
+		public void PrintCounter() {
+			System.Console.WriteLine(this.count);
+		}
+
+		protected virtual void OnThresholdReached(ThresholdReachedEventArgs args) {
+			ThresholdReached?.Invoke(this, args);
+		}
+	}
+	public class ThresholdReachedEventArgs : EventArgs{
+		public string Message { get; set; }
+	}
+
+
+	public class Console {
+		public delegate int ComparatorDelegate<T>(T a, T b);
+		public static List<T> QuickSort<T>(List<T> list, ComparatorDelegate<T> comparator) {
+			if (list.Count <= 1) {
+				return list;
+			}
+			T median = list[0];
+			List<T> ltList = new List<T>();
+			List<T> equalList = new List<T>();
+			List<T> gtList = new List<T>();
+			foreach (T t in list) {
+				if (comparator(t, median) < 0) {
+					ltList.Add(t);
+				}
+				if (comparator(t, median) == 0) {
+					equalList.Add(t);
+				}
+				else if (comparator(t, median) > 0) {
+					gtList.Add(t);
+				}
+			}
+			List<T> sortedLtList = QuickSort(ltList, comparator);
+			List<T> sortedGtList = QuickSort(gtList, comparator);
+			sortedLtList.AddRange(equalList);
+			sortedLtList.AddRange(sortedGtList);
+			return sortedLtList;
+		}
+		public static int CompareStrings(string a, string b) {
+			return String.Compare(b, a);
+		}
+
+		public static void MyHandler(object o, ThresholdReachedEventArgs args) {
+			System.Console.WriteLine("{0} and fuck you", args.Message);
+		}
 
 		public static void Main(string[] args) {
+			List<string> strings = new List<string>() {
+				"abc", "bbb", "aaa", "ccc", "cba", "bca", "fuckyou"
+			};
+			List<string> sortedStrings = QuickSort(strings, String.Compare);
+			foreach (string s in sortedStrings) {
+				System.Console.Write("{0}, ", s);
+			}
+			sortedStrings = QuickSort(strings, CompareStrings);
+			System.Console.WriteLine();
+			foreach (string s in sortedStrings) {
+				System.Console.Write("{0}, ", s);
+			}
 
+			System.Console.WriteLine();
+			List<int> ints = new List<int>() { 4, 2, 3, 56, 6, 42, 132, 22222, 15, 15, 13 };
+			List<int> sortedInts = QuickSort(ints, (a, b) => a < b ? -1 : a == b ? 0 : 1);
+			foreach (int i in sortedInts) {
+				System.Console.Write("{0}, ", i);
+			}
+
+			System.Console.ReadLine();
+			//Counter c = new Counter();
+			//c.SetThreshold(10);
+			//c.ThresholdReached += MyHandler;
+
+			//for (int i = 0; i < 20; i++) {
+			//	c.PrintCounter();
+			//	c.IncreaseCount();
+			//}
+			//System.Console.ReadLine();
+
+			//System.Console.WriteLine("Hello World!");
+			//WL_Workout foo = new WL_WorkoutMisc() { Description = "This is the description of a complicated workout", Comment = "This is a comment about the workout", Name = "Obscure123" };
+			//System.Console.WriteLine("" + foo);
+			//System.Console.ReadLine();
+			/*
 			List<WL_Round> rounds = new List<WL_Round>();
 			rounds.Add(new WL_Round() { Movement = "Thruster", Quantity = new WL_QuantityReps() { Reps = 21 }, Load = new WL_Load() { Load = 95 } });
 			rounds.Add(new WL_Round() { Movement = "Pullup", Quantity = new WL_QuantityReps() { Reps = 21 } });
@@ -139,7 +234,7 @@ namespace WorkoutLogger {
 			////System.Console.WriteLine("{0} {1}", m1.Value, m1.Groups[1].Value);
 
 
-			
+
 
 			////XElement testXml = (new List<int>() { 2, 3, 1, 5 }).SerializeToXml();
 			////IList list = testXml.DeserializeFromXml() as IList;
@@ -176,6 +271,7 @@ namespace WorkoutLogger {
 			////Model.TestClass myClass = new Model.TestClass(null);
 			////myClass.XmlContext = new Model.XmlSerializableContext { IncludeMeta = false };
 			////myClass.ToXml();
+
 		}
 	}
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorkoutLogger.Properties {
+namespace WLVEntry{
 
 
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

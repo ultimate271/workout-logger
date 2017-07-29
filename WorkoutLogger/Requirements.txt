@@ -1,0 +1,17 @@
+The core top level relationships of the workout logger will be like so.
+
+User
+Workout
+LogEntry
+LogResult
+
+A LogEntry will contain a foreign key to the User, Workout, and LogResult.
+
+The workflow of the Workout Logger is as follows.
+
+A user fires up the program, perhaps connecting to a database, be it sql, xml, or perhaps something else crazy down the line.
+This database will populate the object model.
+The user may query the object model, using the controls on the front end. When this happens, information from the object model is displayed to the user, based upon the query.
+A user may create, edit, or delete a log, workout, or other element in the model. This will happen at the object level, and get pushed to the original database at the users request.
+A user may also discard changes, reloading original information without re-querying the database.
+
